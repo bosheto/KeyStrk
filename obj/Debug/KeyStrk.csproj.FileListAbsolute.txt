@@ -1,0 +1,7 @@
+C:\Users\Bobi\source\repos\KeyStrk\KeyStrk\bin\Debug\KeyStrk.exe.config
+C:\Users\Bobi\source\repos\KeyStrk\KeyStrk\bin\Debug\KeyStrk.exe
+C:\Users\Bobi\source\repos\KeyStrk\KeyStrk\bin\Debug\KeyStrk.pdb
+C:\Users\Bobi\source\repos\KeyStrk\KeyStrk\obj\Debug\KeyStrk.csprojAssemblyReference.cache
+C:\Users\Bobi\source\repos\KeyStrk\KeyStrk\obj\Debug\KeyStrk.csproj.CoreCompileInputs.cache
+C:\Users\Bobi\source\repos\KeyStrk\KeyStrk\obj\Debug\KeyStrk.exe
+C:\Users\Bobi\source\repos\KeyStrk\KeyStrk\obj\Debug\KeyStrk.pdb
